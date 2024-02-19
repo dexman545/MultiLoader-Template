@@ -5,7 +5,7 @@ plugins {
     id 'java-library'
 }
 base {
-    archivesName = "${mod_name}-neoforge-${minecraft_version}"
+    archivesName = "${mod_name}-api-neoforge-${minecraft_version}"
 }
 
 // Automatically enable neoforge AccessTransformers if the file exists
@@ -39,27 +39,26 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
-    compileOnly project(":common")
-    implementation(project(':api-neoforge'))//todo include
+    compileOnly project(":api-common")
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
 Spec<Task> notNeoTask = { Task it -> !it.name.startsWith("neo") } as Spec<Task>
 
 tasks.withType(JavaCompile).matching(notNeoTask).configureEach {
-    source(project(":common").sourceSets.main.allSource)
+    source(project(":api-common").sourceSets.main.allSource)
 }
 
 tasks.withType(Javadoc).matching(notNeoTask).configureEach {
-    source(project(":common").sourceSets.main.allJava)
+    source(project(":api-common").sourceSets.main.allJava)
 }
 
 tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
+    from(project(":api-common").sourceSets.main.allSource)
 }
 
 tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
-    from project(":common").sourceSets.main.resources
+    from project(":api-common").sourceSets.main.resources
 }
 
 publishing {

@@ -42,10 +42,10 @@ subprojects {
             name = 'Sponge / Mixin'
             url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
-        maven {
+        /*maven {
             name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
             url = 'https://maven.blamejared.com'
-        }
+        }*/
     }
 
     tasks.withType(JavaCompile).configureEach {
@@ -75,10 +75,22 @@ subprojects {
                 "credits": credits
         ]
 
+        if (project.path.contains('api')) {
+            // Forge only allows alphanumerics for ID
+            expandProps['mod_id'] = rootProject.mod_id + 'api'
+            expandProps['mod_name'] = rootProject.mod_name + ' API'
+            expandProps['version'] = rootProject.api_version
+        }
+
         filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', '*.mixins.json']) {
             expand expandProps
         }
         inputs.properties(expandProps)
+    }
+
+    dependencies {
+        implementation 'com.google.auto.service:auto-service:1.1.1'
+        annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The

@@ -5,7 +5,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 base {
-    archivesName = "${mod_name}-forge-${minecraft_version}"
+    archivesName = "${mod_name}-api-forge-${minecraft_version}"
 }
 mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
@@ -30,13 +30,13 @@ minecraft {
         client {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Client'
+            taskName 'Api Client'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 modClientRun {
                     source sourceSets.main
-                    source project(":common").sourceSets.main
+                    source project(":api-common").sourceSets.main
                 }
             }
         }
@@ -44,13 +44,13 @@ minecraft {
         server {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Server'
+            taskName 'Api Server'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 modServerRun {
                     source sourceSets.main
-                    source project(":common").sourceSets.main
+                    source project(":api-common").sourceSets.main
                 }
             }
         }
@@ -59,13 +59,13 @@ minecraft {
             workingDirectory project.file('run')
             ideaModule "${rootProject.name}.${project.name}.main"
             args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-            taskName 'Data'
+            taskName 'Api Data'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             mods {
                 modDataRun {
                     source sourceSets.main
-                    source project(":common").sourceSets.main
+                    source project(":api-common").sourceSets.main
                 }
             }
         }
@@ -76,23 +76,22 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly project(":common")
+    compileOnly project(":api-common")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    implementation(project(':api-forge'))//todo include
 }
 
 tasks.withType(JavaCompile).configureEach {
-    source(project(":common").sourceSets.main.allSource)
+    source(project(":api-common").sourceSets.main.allSource)
 }
 tasks.withType(Javadoc).configureEach {
-    source(project(":common").sourceSets.main.allJava)
+    source(project(":api-common").sourceSets.main.allJava)
 }
 tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
+    from(project(":api-common").sourceSets.main.allSource)
 }
 
 processResources {
-    from project(":common").sourceSets.main.resources
+    from project(":api-common").sourceSets.main.resources
 }
 
 jar.finalizedBy('reobfJar')
