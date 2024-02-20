@@ -1,17 +1,17 @@
-package com.example.examplemod.platform;
+package com.example.examplemod.api.platform;
 
-import com.example.examplemod.platform.services.IPlatformHelper;
+import com.example.examplemod.api.platform.services.IPlatformHelper;
 import com.google.auto.service.AutoService;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLLoader;
 
 @AutoService(IPlatformHelper.class)
-public class ForgePlatformHelper implements IPlatformHelper {
+public class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public String getPlatformName() {
 
-        return "Forge";
+        return "NeoForge";
     }
 
     @Override

@@ -40,6 +40,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
     compileOnly project(":common")
+    implementation(project(':api-common'))//this is needed for import, make as api config in api-neo?
     implementation(project(':api-neoforge'))//todo include
 }
 

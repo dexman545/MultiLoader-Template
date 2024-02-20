@@ -1,6 +1,6 @@
-package com.example.examplemod.platform;
+package com.example.examplemod.api.platform;
 
-import com.example.examplemod.platform.services.IPlatformHelper;
+import com.example.examplemod.api.platform.services.IPlatformHelper;
 import com.google.auto.service.AutoService;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
