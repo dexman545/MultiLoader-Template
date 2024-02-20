@@ -1,5 +1,7 @@
 package com.example.examplemod.platform.services;
 
+import java.nio.file.Path;
+
 public interface IPlatformHelper {
 
     /**
@@ -23,6 +25,11 @@ public interface IPlatformHelper {
      * @return True if in a development environment, false otherwise.
      */
     boolean isDevelopmentEnvironment();
+
+    /**
+     * @return The config directory.
+     */
+    Path getConfigDir();
 
     /**
      * Gets the name of the environment type as a string.
