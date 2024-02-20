@@ -17,6 +17,7 @@ if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
 runs {
     configureEach {
         modSource project.sourceSets.main
+        modSource project(':api-neoforge').sourceSets.main //todo is this needed when jarJar is used?
     }
     client {
         systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
