@@ -28,9 +28,7 @@ plugins {
 rootProject.name = 'MultiLoader-Template'
 include("common")
 include("fabric")
-//include("forge")
 include("neoforge")
 include("api-common")
 include("api-fabric")
-//include("api-forge")
 include("api-neoforge")
