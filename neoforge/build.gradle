@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 plugins {
     id 'idea'
     id 'maven-publish'
@@ -38,10 +40,18 @@ runs {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+jarJar.enable()//todo strip -all from jar name
+
 dependencies {
     implementation "net.neoforged:neoforge:${neoforge_version}"
     compileOnly project(":common")
-    implementation(project(':api-neoforge'))//todo include
+    implementation(project(':api-neoforge'))
+
+    jarJar(project(':api-neoforge')) {
+        transitive = false
+        jarJar.ranged(it, "[${project(':api-neoforge').version}]")
+        jarJar.pin(it, project(':api-neoforge').version)
+    }
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
@@ -68,6 +78,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId base.archivesName.get()
             from components.java
+            jarJar.component(it)
         }
     }
     repositories {
