@@ -54,6 +54,13 @@ subprojects {
         it.options.getRelease().set(17)
     }
 
+    if (project.path.contains('api')) {
+        // Forge only allows alphanumerics for ID
+        mod_id = rootProject.mod_id + 'api'
+        mod_name = rootProject.mod_name + ' API'
+        version = rootProject.api_version
+    }
+
     processResources {
         def expandProps = [
                 "version": version,
